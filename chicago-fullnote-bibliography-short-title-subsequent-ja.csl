@@ -2084,7 +2084,7 @@
     <layout suffix="。" delimiter="；" locale="ja">
       <choose>
         <if position="subsequent">
-          <group delimiter="、">
+          <group delimiter="">
             <text macro="contributors-short-ja"/>
             <group delimiter=" ">
               <group delimiter="、">
