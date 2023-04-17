@@ -528,7 +528,7 @@
       </else-if>
       <else-if variable="reviewed-author">
         <group delimiter="、">
-          <text variable="title" quotes="false" prefix="『" suffix="』" prefix="Review of "/>
+          <text variable="title" quotes="false" prefix="Review of 『" suffix="』"/>
           <names variable="reviewed-author">
             <label form="verb-short" text-case="lowercase" suffix=" "/>
             <name delimiter="、"/>
