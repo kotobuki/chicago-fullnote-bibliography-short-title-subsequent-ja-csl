@@ -68,6 +68,10 @@
       <term name="issue">号</term>
       <term name="issue" form="short">号</term>
     </terms>
+    <!-- 標準のform="text"およびform="numeric"だとsuffix="年"が含まれてしまうため別の形式を定義する -->
+    <date form="numeric-year-only">
+      <date-part name="year" suffix=""/>
+    </date>
   </locale>
   <macro name="editor-translator">
     <group delimiter=", ">
@@ -1406,6 +1410,78 @@
       </else>
     </choose>
   </macro>
+  <macro name="issued-ja">
+    <choose>
+      <if variable="issued">
+        <choose>
+          <if type="legal_case">
+            <group delimiter=" ">
+              <text variable="authority"/>
+              <choose>
+                <if variable="container-title" match="any">
+                  <!--Only print year for cases published in reporters-->
+                  <date variable="issued" form="numeric-year-only"/>
+                </if>
+                <else>
+                  <date variable="issued" form="text"/>
+                </else>
+              </choose>
+            </group>
+          </if>
+          <else-if type="book bill chapter  legislation motion_picture paper-conference song thesis" match="any">
+            <choose>
+              <if is-uncertain-date="issued">
+                <date variable="issued" form="numeric" date-parts="year" prefix="[" suffix="?]"/>
+              </if>
+              <else>
+                <date variable="issued" form="numeric-year-only"/>
+              </else>
+            </choose>
+          </else-if>
+          <else-if type="patent">
+            <group delimiter="、">
+              <group delimiter=" ">
+                <!--Needs Localization-->
+                <text value="filed"/>
+                <date variable="submitted" form="text"/>
+              </group>
+              <group delimiter=" ">
+                <choose>
+                  <if variable="issued submitted" match="all">
+                    <text term="and"/>
+                  </if>
+                </choose>
+                <!--Needs Localization-->
+                <text value="issued"/>
+                <date variable="issued" form="text"/>
+              </group>
+            </group>
+          </else-if>
+          <!-- date-part name="year"に付随するsuffix="年"を表示しないようにする（本来であれば年・月・日のどこまで与えられたかによって処理を分けたい） -->
+          <else-if type="article-journal">
+            <date variable="issued" form="numeric-year-only"/>
+          </else-if>
+          <else>
+            <choose>
+              <if is-uncertain-date="issued">
+                <date variable="issued" form="text" prefix="[" suffix="?]"/>
+              </if>
+              <else>
+                <date variable="issued" form="text"/>
+              </else>
+            </choose>
+          </else>
+        </choose>
+      </if>
+      <else-if variable="status">
+        <text variable="status"/>
+      </else-if>
+      <else-if variable="accessed URL" match="all"/>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
   <macro name="point-locators-subsequent">
     <choose>
       <if type="legal_case" variable="locator" match="all">
@@ -1731,20 +1807,20 @@
   <macro name="issue-note-ja">
     <choose>
       <if type="bill legislation legal_case" match="any">
-        <text macro="issued" prefix="（" suffix="）"/>
+        <text macro="issued-ja" prefix="（" suffix="）"/>
       </if>
       <else-if type="article-journal">
         <choose>
           <if variable="volume issue" match="any">
-            <text macro="issued" prefix="（" suffix="）"/>
+            <text macro="issued-ja" prefix="（" suffix="）"/>
           </if>
           <else>
-            <text macro="issued"/>
+            <text macro="issued-ja"/>
           </else>
         </choose>
       </else-if>
       <else-if type="article-newspaper">
-        <text macro="issued"/>
+        <text macro="issued-ja"/>
       </else-if>
       <else-if type="manuscript thesis speech" match="any">
         <group delimiter="、" prefix="（" suffix="）">
@@ -1756,7 +1832,7 @@
           <text variable="event"/>
           <text variable="event-place"/>
           <text variable="publisher"/>
-          <text macro="issued"/>
+          <text macro="issued-ja"/>
         </group>
       </else-if>
       <else-if variable="publisher-place event-place publisher" match="any">
@@ -1769,11 +1845,11 @@
               <text macro="publisher"/>
             </group>
           </group>
-          <text macro="issued"/>
+          <text macro="issued-ja"/>
         </group>
       </else-if>
       <else>
-        <text macro="issued"/>
+        <text macro="issued-ja"/>
       </else>
     </choose>
   </macro>
@@ -1953,15 +2029,15 @@
   <macro name="issue-ja">
     <choose>
       <if type="bill legislation legal_case" match="any">
-        <text macro="issued" prefix="（" suffix="）"/>
+        <text macro="issued-ja" prefix="（" suffix="）"/>
       </if>
       <else-if type="article-journal">
         <choose>
           <if variable="issue volume" match="any">
-            <text macro="issued" prefix="（" suffix="）"/>
+            <text macro="issued-ja" prefix="（" suffix="）"/>
           </if>
           <else>
-            <text macro="issued"/>
+            <text macro="issued-ja"/>
           </else>
         </choose>
       </else-if>
@@ -1977,12 +2053,12 @@
             <text macro="event"/>
           </group>
           <text variable="event-place"/>
-          <text macro="issued"/>
+          <text macro="issued-ja"/>
         </group>
       </else-if>
       <!--Chicago doesn't use publisher/place for Newspapers -->
       <else-if type="article-newspaper">
-        <text macro="issued"/>
+        <text macro="issued-ja"/>
       </else-if>
       <else-if variable="publisher-place publisher" match="any">
         <group delimiter="、">
@@ -1998,12 +2074,12 @@
               <text macro="publisher"/>
             </group>
           </group>
-          <text macro="issued"/>
+          <text macro="issued-ja"/>
         </group>
       </else-if>
       <!--location for data for maps and artwork is different-->
       <else-if type="graphic map" match="none">
-        <text macro="issued"/>
+        <text macro="issued-ja"/>
       </else-if>
     </choose>
   </macro>
@@ -2050,8 +2126,8 @@
         </else-if>
       </choose>
       <choose>
-        <if variable="issued" match="none">
-          <group delimiter=" ">
+        <if variable="issued-ja" match="none">
+          <group delimiter="：">
             <text term="accessed"/>
             <date variable="accessed" form="text"/>
           </group>
@@ -2114,8 +2190,8 @@
         </else-if>
       </choose>
       <choose>
-        <if variable="issued" match="none">
-          <group delimiter=" ">
+        <if variable="issued-ja" match="none">
+          <group delimiter="：">
             <text term="accessed" text-case="capitalize-first"/>
             <date variable="accessed" form="text"/>
           </group>
