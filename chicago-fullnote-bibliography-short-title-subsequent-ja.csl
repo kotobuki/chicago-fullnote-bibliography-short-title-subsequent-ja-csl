@@ -63,6 +63,10 @@
       <term name="translator" form="short">訳：</term>
       <term name="translator" form="verb">翻訳：</term>
       <term name="translator" form="verb-short">訳：</term>
+      <term name="volume">巻</term>
+      <term name="volume" form="short">巻</term>
+      <term name="issue">号</term>
+      <term name="issue" form="short">号</term>
     </terms>
   </locale>
   <macro name="editor-translator">
@@ -744,7 +748,7 @@
           <text variable="container-title"/>
         </if>
         <else-if type="post-weblog">
-          <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』" suffix="（ブログ）"/>
+          <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』（ブログ）"/>
         </else-if>
         <else-if type="bill legislation legal_case" match="none">
           <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』"/>
@@ -784,7 +788,7 @@
           <text variable="container-title"/>
         </if>
         <else-if type="post-weblog">
-          <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』" suffix="（ブログ）"/>
+          <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』（ブログ）"/>
         </else-if>
         <else-if type="bill legislation legal_case" match="none">
           <text variable="container-title" text-case="title" quotes="false" prefix="『" suffix="』"/>
@@ -970,11 +974,12 @@
     <choose>
       <if type="article-journal">
         <group delimiter="、">
-          <text macro="collection-title-journal"/>
-          <text variable="volume"/>
-          <group delimiter=" ">
-            <text term="issue" form="short"/>
+          <group delimiter="">
+            <text macro="collection-title-journal"/>
+            <text variable="volume"/>
+            <text term="volume" form="short"/>
             <text variable="issue"/>
+            <text term="issue" form="short"/>
           </group>
         </group>
       </if>
@@ -985,8 +990,8 @@
         <group delimiter="、">
           <text macro="edition-note"/>
           <group delimiter=" ">
-            <text term="volume" form="short"/>
             <number variable="volume" form="numeric"/>
+            <text term="volume" form="short"/>
           </group>
           <choose>
             <if variable="locator" match="none">
@@ -1076,6 +1081,17 @@
       </if>
     </choose>
   </macro>
+  <macro name="locators-join-with-space-ja">
+    <choose>
+      <if type="article-journal" variable="volume" match="all">
+        <choose>
+          <if match="none" variable="collection-title">
+            <text macro="locators-ja"/>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
   <macro name="locators-join-with-comma">
     <choose>
       <if type="bill chapter legislation legal_case paper-conference" match="any">
@@ -1093,10 +1109,34 @@
       </else-if>
     </choose>
   </macro>
+  <macro name="locators-join-with-comma-ja">
+    <choose>
+      <if type="bill chapter legislation legal_case paper-conference" match="any">
+        <text macro="locators-ja"/>
+      </if>
+      <else-if type="article-journal">
+        <choose>
+          <if variable="volume" match="none">
+            <text macro="locators-ja"/>
+          </if>
+          <else-if match="any" variable="collection-title">
+            <text macro="locators-ja"/>
+          </else-if>
+        </choose>
+      </else-if>
+    </choose>
+  </macro>
   <macro name="locators-join-with-period">
     <choose>
       <if type="bill legislation legal_case article-journal chapter paper-conference" match="none">
         <text macro="locators"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="locators-join-with-period-ja">
+    <choose>
+      <if type="bill legislation legal_case article-journal chapter paper-conference" match="none">
+        <text macro="locators-ja"/>
       </if>
     </choose>
   </macro>
@@ -1109,6 +1149,50 @@
           <group delimiter=" ">
             <text term="issue" form="short"/>
             <text variable="issue"/>
+          </group>
+        </group>
+      </if>
+      <else-if type="bill legislation legal_case" match="any">
+        <text macro="legal-cites"/>
+      </else-if>
+      <else-if type="book graphic motion_picture report song" match="any">
+        <group delimiter=". ">
+          <text macro="edition"/>
+          <group delimiter=" ">
+            <text term="volume" form="short" text-case="capitalize-first"/>
+            <number variable="volume" form="numeric"/>
+          </group>
+          <group delimiter=" ">
+            <number variable="number-of-volumes" form="numeric"/>
+            <text term="volume" form="short" plural="true"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
+        <group delimiter=". ">
+          <text macro="edition"/>
+          <choose>
+            <if variable="page" match="none">
+              <group delimiter=" ">
+                <text term="volume" form="short" text-case="capitalize-first"/>
+                <number variable="volume" form="numeric"/>
+              </group>
+            </if>
+          </choose>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+  <macro name="locators-ja">
+    <choose>
+      <if type="article-journal">
+        <group delimiter="、">
+          <group delimiter="">
+            <text macro="collection-title-journal"/>
+            <text variable="volume"/>
+            <text term="volume" form="short"/>
+            <text variable="issue"/>
+            <text term="issue" form="short"/>
           </group>
         </group>
       </if>
@@ -2120,7 +2204,7 @@
                         <text macro="container-title-note-ja"/>
                         <text macro="container-contributors-note"/>
                       </group>
-                      <text macro="locators-note-join-with-space"/>
+                      <text macro="locators-note-join-with-space-ja"/>
                     </group>
                     <text macro="locators-note-join-with-comma-ja"/>
                     <text macro="collection-title-ja"/>
@@ -2225,12 +2309,12 @@
                         <text macro="container-title-ja"/>
                         <text macro="container-contributors-ja"/>
                       </group>
-                      <text macro="locators-join-with-period"/>
+                      <text macro="locators-join-with-period-ja"/>
                     </group>
-                    <text macro="locators-join-with-comma"/>
+                    <text macro="locators-join-with-comma-ja"/>
                     <text macro="locators-chapter"/>
                   </group>
-                  <text macro="locators-join-with-space"/>
+                  <text macro="locators-join-with-space-ja"/>
                 </group>
                 <text macro="collection-title-ja"/>
                 <text macro="issue-join-with-period-ja"/>
