@@ -3,7 +3,7 @@
   <info>
     <title>Chicago Manual of Style 17th edition (full note, short title subsequent) with Japanese</title>
     <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent</id>
-    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent" rel="self"/>
+    <link href="https://github.com/kotobuki/chicago-fullnote-bibliography-short-title-subsequent-ja-csl" rel="self"/>
     <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent" rel="template"/>
     <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography" rel="template"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-04-16T20:57:59+09:00</updated>
+    <updated>2023-04-17T10:04:33+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
