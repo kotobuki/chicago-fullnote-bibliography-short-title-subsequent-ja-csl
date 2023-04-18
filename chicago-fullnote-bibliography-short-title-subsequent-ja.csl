@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-04-17T10:04:33+09:00</updated>
+    <updated>2023-04-18T17:39:12+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -283,8 +283,8 @@
   </macro>
   <macro name="editor-ja">
     <names variable="editor">
+      <label form="short" prefix=""/>
       <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
-      <label form="short" prefix="、"/>
     </names>
   </macro>
   <macro name="translator">
@@ -295,8 +295,8 @@
   </macro>
   <macro name="translator-ja">
     <names variable="translator">
+      <label form="verb-short" prefix=""/>
       <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
-      <label form="verb-short" prefix="、"/>
     </names>
   </macro>
   <macro name="recipient">
@@ -341,8 +341,8 @@
       <names variable="author">
         <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
         <substitute>
-          <text macro="editor"/>
-          <text macro="translator"/>
+          <text macro="editor-ja"/>
+          <text macro="translator-ja"/>
           <choose>
             <if type="article-magazine article-newspaper" match="any">
               <text variable="container-title" font-style="italic"/>
@@ -1342,6 +1342,22 @@
       </else>
     </choose>
   </macro>
+  <macro name="publisher-ja">
+    <choose>
+      <if type="thesis">
+        <text variable="publisher"/>
+      </if>
+      <else-if type="speech">
+        <text variable="event-place"/>
+      </else-if>
+      <else>
+        <group delimiter="：">
+          <text variable="publisher-place"/>
+          <text variable="publisher"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
   <macro name="issued">
     <choose>
       <if variable="issued">
@@ -1831,7 +1847,7 @@
           </choose>
           <text variable="event"/>
           <text variable="event-place"/>
-          <text variable="publisher"/>
+          <text variable="publisher-ja"/>
           <text macro="issued-ja"/>
         </group>
       </else-if>
@@ -1842,7 +1858,7 @@
             <text macro="originally-published"/>
             <group delimiter="、">
               <text macro="reprint-note"/>
-              <text macro="publisher"/>
+              <text macro="publisher-ja"/>
             </group>
           </group>
           <text macro="issued-ja"/>
@@ -2071,7 +2087,7 @@
             <text macro="originally-published"/>
             <group delimiter="、">
               <text macro="reprint"/>
-              <text macro="publisher"/>
+              <text macro="publisher-ja"/>
             </group>
           </group>
           <text macro="issued-ja"/>
@@ -2241,119 +2257,134 @@
   </macro>
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
     <!-- 脚注に関する日本語用の設定 -->
-    <layout suffix="。" delimiter="；" locale="ja">
-      <choose>
-        <if position="subsequent">
-          <group delimiter="、">
-            <text macro="contributors-short-ja"/>
-            <group delimiter=" ">
-              <group delimiter="、">
-                <text macro="title-short-ja"/>
-                <!--if title & author are the same: -->
-                <text macro="date-disambiguate"/>
-                <text macro="case-locator-subsequent"/>
+    <layout locale="ja">
+      <group suffix="。" delimiter="；">
+        <choose>
+          <if position="subsequent">
+            <group delimiter="、">
+              <text macro="contributors-short-ja"/>
+              <group delimiter=" ">
+                <group delimiter="、">
+                  <text macro="title-short-ja"/>
+                  <!--if title & author are the same: -->
+                  <text macro="date-disambiguate"/>
+                  <text macro="case-locator-subsequent"/>
+                </group>
+                <text macro="case-pinpoint-subsequent"/>
               </group>
-              <text macro="case-pinpoint-subsequent"/>
+              <choose>
+                <if match="none" type="legal_case">
+                  <text macro="point-locators-subsequent"/>
+                </if>
+              </choose>
             </group>
-            <choose>
-              <if match="none" type="legal_case">
-                <text macro="point-locators-subsequent"/>
-              </if>
-            </choose>
-          </group>
-        </if>
-        <else>
-          <group delimiter="、">
-            <group delimiter="：">
-              <group delimiter="、">
-                <group delimiter="">
-                  <group delimiter="、">
-                    <group delimiter="">
+          </if>
+          <else>
+            <group delimiter="、">
+              <group delimiter="：">
+                <group delimiter="、">
+                  <group delimiter="">
+                    <group delimiter="、">
                       <group delimiter="">
                         <group delimiter="">
-                          <text macro="contributors-note-ja"/>
-                          <text macro="title-note-ja"/>
-                          <text macro="issue-map-graphic"/>
+                          <group delimiter="">
+                            <text macro="contributors-note-ja"/>
+                            <text macro="title-note-ja"/>
+                            <text macro="issue-map-graphic"/>
+                          </group>
+                          <text macro="description-note-ja"/>
+                          <text macro="secondary-contributors-note-ja"/>
+                          <text macro="container-title-note-ja"/>
+                          <text macro="container-contributors-note"/>
                         </group>
-                        <text macro="description-note-ja"/>
-                        <text macro="secondary-contributors-note-ja"/>
-                        <text macro="container-title-note-ja"/>
-                        <text macro="container-contributors-note"/>
+                        <text macro="locators-note-join-with-space-ja"/>
                       </group>
-                      <text macro="locators-note-join-with-space-ja"/>
+                      <text macro="locators-note-join-with-comma-ja"/>
+                      <text macro="collection-title-ja"/>
+                      <text macro="issue-note-join-with-comma-ja"/>
                     </group>
-                    <text macro="locators-note-join-with-comma-ja"/>
-                    <text macro="collection-title-ja"/>
-                    <text macro="issue-note-join-with-comma-ja"/>
+                    <text macro="issue-note-join-with-space-ja"/>
                   </group>
-                  <text macro="issue-note-join-with-space-ja"/>
+                  <text macro="locators-newspaper-ja"/>
+                  <text macro="point-locators-join-with-comma"/>
                 </group>
-                <text macro="locators-newspaper-ja"/>
-                <text macro="point-locators-join-with-comma"/>
+                <text macro="point-locators-join-with-colon"/>
               </group>
-              <text macro="point-locators-join-with-colon"/>
+              <text macro="access-note-ja"/>
             </group>
-            <text macro="access-note-ja"/>
-          </group>
-        </else>
-      </choose>
+          </else>
+        </choose>
+      </group>
     </layout>
     <!-- 脚注に関する日本語以外の言語用の設定 -->
-    <layout suffix="." delimiter="; ">
-      <choose>
-        <if position="subsequent">
-          <group delimiter=", ">
-            <text macro="contributors-short"/>
-            <group delimiter=" ">
-              <group delimiter=", ">
-                <text macro="title-short"/>
-                <!--if title & author are the same: -->
-                <text macro="date-disambiguate"/>
-                <text macro="case-locator-subsequent"/>
-              </group>
-              <text macro="case-pinpoint-subsequent"/>
-            </group>
-            <choose>
-              <if match="none" type="legal_case">
-                <text macro="point-locators-subsequent"/>
-              </if>
-            </choose>
-          </group>
-        </if>
-        <else>
-          <group delimiter=", ">
-            <group delimiter=": ">
-              <group delimiter=", ">
-                <group delimiter=" ">
-                  <group delimiter=", ">
-                    <group delimiter=" ">
-                      <group delimiter=", ">
-                        <group delimiter=", ">
-                          <text macro="contributors-note"/>
-                          <text macro="title-note"/>
-                          <text macro="issue-map-graphic"/>
-                        </group>
-                        <text macro="description-note"/>
-                        <text macro="secondary-contributors-note"/>
-                        <text macro="container-title-note"/>
-                        <text macro="container-contributors-note"/>
-                      </group>
-                      <text macro="locators-note-join-with-space"/>
-                    </group>
-                    <text macro="locators-note-join-with-comma"/>
-                    <text macro="collection-title"/>
-                    <text macro="issue-note-join-with-comma"/>
-                  </group>
-                  <text macro="issue-note-join-with-space"/>
+    <layout>
+      <group suffix="." delimiter="; ">
+        <choose>
+          <if position="subsequent">
+            <group delimiter=", ">
+              <text macro="contributors-short"/>
+              <group delimiter=" ">
+                <group delimiter=", ">
+                  <text macro="title-short"/>
+                  <!--if title & author are the same: -->
+                  <text macro="date-disambiguate"/>
+                  <text macro="case-locator-subsequent"/>
                 </group>
-                <text macro="locators-newspaper"/>
-                <text macro="point-locators-join-with-comma"/>
+                <text macro="case-pinpoint-subsequent"/>
               </group>
-              <text macro="point-locators-join-with-colon"/>
+              <choose>
+                <if match="none" type="legal_case">
+                  <text macro="point-locators-subsequent"/>
+                </if>
+              </choose>
             </group>
-            <text macro="access-note"/>
-          </group>
-        </else>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <group delimiter=": ">
+                <group delimiter=", ">
+                  <group delimiter=" ">
+                    <group delimiter=", ">
+                      <group delimiter=" ">
+                        <group delimiter=", ">
+                          <group delimiter=", ">
+                            <text macro="contributors-note"/>
+                            <text macro="title-note"/>
+                            <text macro="issue-map-graphic"/>
+                          </group>
+                          <text macro="description-note"/>
+                          <text macro="secondary-contributors-note"/>
+                          <text macro="container-title-note"/>
+                          <text macro="container-contributors-note"/>
+                        </group>
+                        <text macro="locators-note-join-with-space"/>
+                      </group>
+                      <text macro="locators-note-join-with-comma"/>
+                      <text macro="collection-title"/>
+                      <text macro="issue-note-join-with-comma"/>
+                    </group>
+                    <text macro="issue-note-join-with-space"/>
+                  </group>
+                  <text macro="locators-newspaper"/>
+                  <text macro="point-locators-join-with-comma"/>
+                </group>
+                <text macro="point-locators-join-with-colon"/>
+              </group>
+              <text macro="access-note"/>
+            </group>
+          </else>
+        </choose>
+      </group>
+      <choose>
+        <if>
+          <conditions match="all">
+            <condition position="first"/>
+            <condition variable="alt-translator"/>
+          </conditions>
+          <alternative prefix="〔" suffix="〕">
+            <alternative-text/>
+          </alternative>
+        </if>
       </choose>
     </layout>
   </citation>
@@ -2365,88 +2396,114 @@
       <key variable="issued"/>
     </sort>
     <!-- 文献目録に関する日本語用の設定 -->
-    <layout suffix="。" locale="ja">
-      <group delimiter="。">
-        <group delimiter="：">
-          <group delimiter="、">
-            <group delimiter="">
+    <layout locale="ja">
+      <group delimiter=" ">
+        <group suffix="。">
+          <group delimiter="。">
+            <group delimiter="：">
               <group delimiter="、">
-                <!-- 翻訳者などの後の区切り -->
                 <group delimiter="">
                   <group delimiter="、">
+                    <!-- 翻訳者などの後の区切り -->
                     <group delimiter="">
-                      <group delimiter="">
-                        <text macro="contributors-ja"/>
-                        <text macro="title-ja"/>
-                        <text macro="issue-map-graphic"/>
-                      </group>
-                      <text macro="description-ja"/>
-                      <text macro="secondary-contributors-ja"/>
                       <group delimiter="、">
-                        <text macro="container-title-ja"/>
-                        <text macro="container-contributors-ja"/>
+                        <group delimiter="">
+                          <group delimiter="">
+                            <choose>
+                              <if variable="alt-translator">
+                                <text macro="title-ja"/>
+                                <text macro="contributors-ja"/>
+                                <text macro="issue-map-graphic"/>
+                              </if>
+                              <else>
+                                <text macro="contributors-ja"/>
+                                <text macro="title-ja"/>
+                                <text macro="issue-map-graphic"/>
+                              </else>
+                            </choose>
+                          </group>
+                          <text macro="description-ja"/>
+                          <text macro="secondary-contributors-ja"/>
+                          <group delimiter="、">
+                            <text macro="container-title-ja"/>
+                            <text macro="container-contributors-ja"/>
+                          </group>
+                          <text macro="locators-join-with-period-ja"/>
+                        </group>
+                        <text macro="locators-join-with-comma-ja"/>
+                        <text macro="locators-chapter"/>
                       </group>
-                      <text macro="locators-join-with-period-ja"/>
+                      <text macro="locators-join-with-space-ja"/>
                     </group>
-                    <text macro="locators-join-with-comma-ja"/>
-                    <text macro="locators-chapter"/>
+                    <text macro="collection-title-ja"/>
+                    <text macro="issue-join-with-period-ja"/>
                   </group>
-                  <text macro="locators-join-with-space-ja"/>
+                  <text macro="issue-join-with-space-ja"/>
                 </group>
-                <text macro="collection-title-ja"/>
-                <text macro="issue-join-with-period-ja"/>
+                <text macro="issue-join-with-comma-ja"/>
+                <text macro="locators-journal-join-with-comma"/>
+                <text macro="locators-newspaper"/>
               </group>
-              <text macro="issue-join-with-space-ja"/>
+              <text macro="locators-journal-join-with-colon"/>
             </group>
-            <text macro="issue-join-with-comma-ja"/>
-            <text macro="locators-journal-join-with-comma"/>
-            <text macro="locators-newspaper"/>
+            <text macro="access-ja"/>
           </group>
-          <text macro="locators-journal-join-with-colon"/>
         </group>
-        <text macro="access-ja"/>
       </group>
     </layout>
     <!-- 文献目録に関する日本語以外の言語用の設定 -->
-    <layout suffix=".">
-      <group delimiter=". ">
-        <group delimiter=": ">
-          <group delimiter=", ">
-            <group delimiter=" ">
-              <group delimiter=". ">
+    <layout>
+      <group delimiter=" ">
+        <group suffix=".">
+          <group delimiter=". ">
+            <group delimiter=": ">
+              <group delimiter=", ">
                 <group delimiter=" ">
-                  <group delimiter=", ">
-                    <group delimiter=". ">
-                      <group delimiter=". ">
-                        <text macro="contributors"/>
-                        <text macro="title"/>
-                        <text macro="issue-map-graphic"/>
-                      </group>
-                      <text macro="description"/>
-                      <text macro="secondary-contributors"/>
+                  <group delimiter=". ">
+                    <group delimiter=" ">
                       <group delimiter=", ">
-                        <text macro="container-title"/>
-                        <text macro="container-contributors"/>
+                        <group delimiter=". ">
+                          <group delimiter=". ">
+                            <text macro="contributors"/>
+                            <text macro="title"/>
+                            <text macro="issue-map-graphic"/>
+                          </group>
+                          <text macro="description"/>
+                          <text macro="secondary-contributors"/>
+                          <group delimiter=", ">
+                            <text macro="container-title"/>
+                            <text macro="container-contributors"/>
+                          </group>
+                          <text macro="locators-join-with-period"/>
+                        </group>
+                        <text macro="locators-join-with-comma"/>
+                        <text macro="locators-chapter"/>
                       </group>
-                      <text macro="locators-join-with-period"/>
+                      <text macro="locators-join-with-space"/>
                     </group>
-                    <text macro="locators-join-with-comma"/>
-                    <text macro="locators-chapter"/>
+                    <text macro="collection-title"/>
+                    <text macro="issue-join-with-period"/>
                   </group>
-                  <text macro="locators-join-with-space"/>
+                  <text macro="issue-join-with-space"/>
                 </group>
-                <text macro="collection-title"/>
-                <text macro="issue-join-with-period"/>
+                <text macro="issue-join-with-comma"/>
+                <text macro="locators-journal-join-with-comma"/>
+                <text macro="locators-newspaper"/>
               </group>
-              <text macro="issue-join-with-space"/>
+              <text macro="locators-journal-join-with-colon"/>
             </group>
-            <text macro="issue-join-with-comma"/>
-            <text macro="locators-journal-join-with-comma"/>
-            <text macro="locators-newspaper"/>
+            <text macro="access"/>
           </group>
-          <text macro="locators-journal-join-with-colon"/>
         </group>
-        <text macro="access"/>
+        <group suffix="">
+          <choose>
+            <if variable="alt-translator">
+              <alternative prefix="〔" suffix="〕">
+                <alternative-text/>
+              </alternative>
+            </if>
+          </choose>
+        </group>
       </group>
     </layout>
   </bibliography>
