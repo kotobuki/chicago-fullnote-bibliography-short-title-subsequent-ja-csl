@@ -12,3 +12,40 @@
 
 - [Jurism](https://juris-m.github.io/)にインポートして使う
 - [Pandoc](https://pandoc.org/)およびそのフィルター[citeproc-js-based-replacer](https://github.com/kotobuki/citeproc-js-based-replacer)と組み合わせて使う
+
+## 例
+
+```json
+[
+  {
+    "id": "morgan2022philosophy",
+    "author": [
+      {
+        "family": "Morgan",
+        "given": "Casey"
+      },
+      {
+        "family": "Patrov",
+        "given": "Alexei"
+      }
+    ],
+    "citation-key": "morgan2022philosophy",
+    "event-place": "Chicago, IL",
+    "issued": {
+      "date-parts": [[2022]]
+    },
+    "language": "en>ja",
+    "note": "alt-title: 自由意志の哲学\nalt-translator: 鈴木||真紀\nalt-issued: 2023\nalt-publisher-place: 東京\nalt-publisher: 東京学術出版",
+    "publisher": "Global Academic Press",
+    "publisher-place": "Chicago, IL",
+    "title": "The Philosophy of Free Will",
+    "type": "book"
+  }
+]
+```
+
+`Note` Casey Morgan and Alexei Patrov, *The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〔『自由意志の哲学』訳：鈴木真紀（東京：東京学術出版、2023）。〕
+
+`Bibliography entry` Morgan, Casey, and Alexei Patrov. *The Philosophy of Free Will*. Chicago, IL: Global Academic Press, 2022. 〔『自由意志の哲学』訳：鈴木真紀、東京：東京学術出版、2023。〕
+
+注：これは架空の文献です。
