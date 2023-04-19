@@ -35,7 +35,7 @@
       "date-parts": [[2022]]
     },
     "language": "en>ja",
-    "note": "alt-title: 自由意志の哲学\nalt-translator: 鈴木||真紀\nalt-issued: 2023\nalt-publisher-place: 東京\nalt-publisher: 東京学術出版",
+    "note": "alt-title: 自由意志の哲学\nalt-translator: 鈴木||真紀\nalt-issued: 2023\nalt-publisher-place: 東京\nalt-publisher: 城南大学出版会",
     "publisher": "Global Academic Press",
     "publisher-place": "Chicago, IL",
     "title": "The Philosophy of Free Will",
@@ -44,8 +44,8 @@
 ]
 ```
 
-`Note` Casey Morgan and Alexei Patrov, *The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〔『自由意志の哲学』訳：鈴木真紀（東京：東京学術出版、2023）。〕
+`Note` Casey Morgan and Alexei Patrov, *The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〔『自由意志の哲学』訳：鈴木真紀（東京：城南大学出版会、2023）。〕
 
-`Bibliography entry` Morgan, Casey, and Alexei Patrov. *The Philosophy of Free Will*. Chicago, IL: Global Academic Press, 2022. 〔『自由意志の哲学』訳：鈴木真紀、東京：東京学術出版、2023。〕
+`Bibliography entry` Morgan, Casey, and Alexei Patrov. *The Philosophy of Free Will*. Chicago, IL: Global Academic Press, 2022. 〔『自由意志の哲学』訳：鈴木真紀、東京：城南大学出版会、2023。〕
 
 注：これは架空の文献です。
