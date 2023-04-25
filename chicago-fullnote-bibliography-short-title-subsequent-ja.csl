@@ -56,13 +56,18 @@
   <locale xml:lang="ja">
     <!-- 注記：直前のブロックに合わせて最小限のみ定義。日本語のロケールファイルで未翻訳の用語が多いため、そちらを更新した方がいいかもしれない。 -->
     <terms>
-      <term name="editor" form="verb-short">編：</term>
-      <term name="editortranslator" form="verb">編集・翻訳：</term>
-      <term name="editortranslator" form="verb-short">編・訳：</term>
-      <term name="translator">翻訳：</term>
-      <term name="translator" form="short">訳：</term>
-      <term name="translator" form="verb">翻訳：</term>
-      <term name="translator" form="verb-short">訳：</term>
+      <term name="editor">編集者</term>
+      <term name="editor" form="short">編</term>
+      <term name="editor" form="verb">編集</term>
+      <term name="editor" form="verb-short">編</term>
+      <term name="translator">翻訳者</term>
+      <term name="translator" form="short">訳</term>
+      <term name="translator" form="verb">翻訳</term>
+      <term name="translator" form="verb-short">訳</term>
+      <term name="editortranslator">編集者・翻訳者</term>
+      <term name="editortranslator" form="short">編・訳</term>
+      <term name="editortranslator" form="verb">編集・翻訳</term>
+      <term name="editortranslator" form="verb-short">編・訳</term>
       <term name="volume">巻</term>
       <term name="volume" form="short">巻</term>
       <term name="issue">号</term>
@@ -100,7 +105,7 @@
           <if variable="container-author reviewed-author" match="any">
             <group>
               <names variable="container-author reviewed-author">
-                <label form="verb-short" text-case="lowercase" suffix=""/>
+                <label form="verb-short" text-case="lowercase" suffix="："/>
                 <name delimiter="、"/>
               </names>
             </group>
@@ -108,7 +113,7 @@
         </choose>
       </group>
       <names variable="editor translator" delimiter="、">
-        <label form="verb-short" text-case="lowercase" suffix=""/>
+        <label form="verb-short" text-case="lowercase" suffix="："/>
         <name delimiter="、"/>
       </names>
     </group>
@@ -155,7 +160,7 @@
     <choose>
       <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="none">
         <names variable="editor translator" delimiter="。">
-          <label form="verb" text-case="capitalize-first" suffix=""/>
+          <label form="verb" text-case="capitalize-first" suffix="："/>
           <name delimiter="、"/>
         </names>
       </if>
@@ -283,7 +288,7 @@
   </macro>
   <macro name="editor-ja">
     <names variable="editor">
-      <label form="short" prefix=""/>
+      <label form="short" suffix="："/>
       <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
     </names>
   </macro>
@@ -295,7 +300,7 @@
   </macro>
   <macro name="translator-ja">
     <names variable="translator">
-      <label form="verb-short" prefix=""/>
+      <label form="verb-short" suffix="："/>
       <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
     </names>
   </macro>
@@ -2295,7 +2300,7 @@
                           <text macro="description-note-ja"/>
                           <text macro="secondary-contributors-note-ja"/>
                           <text macro="container-title-note-ja"/>
-                          <text macro="container-contributors-note"/>
+                          <text macro="container-contributors-note-ja"/>
                         </group>
                         <text macro="locators-note-join-with-space-ja"/>
                       </group>
