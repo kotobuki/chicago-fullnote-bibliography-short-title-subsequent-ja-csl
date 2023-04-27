@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-04-18T17:39:12+09:00</updated>
+    <updated>2023-04-27T18:06:52+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -525,7 +525,14 @@
         </choose>
       </if>
       <else-if type="book graphic motion_picture song" match="any">
-        <text variable="title" text-case="title" quotes="false" prefix="『" suffix="』"/>
+        <choose>
+          <if variable="alt-title">
+            <text variable="alt-title" text-case="title" quotes="false" prefix="『" suffix="』"/>
+          </if>
+          <else>
+            <text variable="title" text-case="title" quotes="false" prefix="『" suffix="』"/>
+          </else>
+        </choose>
         <group prefix="（" suffix="）" delimiter=" ">
           <text term="version"/>
           <text variable="version"/>
