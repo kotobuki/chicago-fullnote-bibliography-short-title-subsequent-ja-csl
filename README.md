@@ -12,40 +12,41 @@
 
 - [Jurism](https://juris-m.github.io/)にインポートして使う
 - [Pandoc](https://pandoc.org/)およびそのフィルター[citeproc-js-based-replacer](https://github.com/kotobuki/citeproc-js-based-replacer)と組み合わせて使う
+- LaTeXおよび[citeproc-lua](https://github.com/zepinglee/citeproc-lua)と組み合わせて使う
 
 ## 例
 
 ```json
 [
   {
-    "id": "morgan2022philosophy",
+    "id": "morgan2023jiyu",
     "author": [
-      {
-        "family": "Morgan",
-        "given": "Casey"
-      },
-      {
-        "family": "Patrov",
-        "given": "Alexei"
-      }
+      { "family": "Morgan", "given": "Casey" },
+      { "family": "Patrov", "given": "Alexei" }
     ],
-    "citation-key": "morgan2022philosophy",
-    "event-place": "Chicago, IL",
-    "issued": {
-      "date-parts": [[2022]]
-    },
-    "language": "en>ja",
-    "note": "alt-title: 自由意志の哲学\nalt-translator: 鈴木||真紀\nalt-issued: 2023\nalt-publisher-place: 東京\nalt-publisher: 城南大学出版会",
-    "publisher": "Global Academic Press",
-    "publisher-place": "Chicago, IL",
-    "title": "The Philosophy of Free Will",
+    "citation-key": "morgan2023jiyu",
+    "event-place": "東京",
+    "issued": { "date-parts": [[2023]] },
+    "language": "ja",
+    "original-date": { "date-parts": [[2022]] },
+    "original-publisher": "Global Academic Press",
+    "original-publisher-place": "Chicago, IL",
+    "original-title": "The Philosophy of Free Will",
+    "publisher": "城南大学出版会",
+    "publisher-place": "東京",
+    "title": "自由意志の哲学",
+    "translator": [{ "family": "鈴木", "given": "真紀" }],
     "type": "book"
   }
 ]
 ```
 
-`Note` Casey Morgan and Alexei Patrov, *The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〔『自由意志の哲学』訳：鈴木真紀（東京：城南大学出版会、2023）。〕
+`Note` Casey Morgan、Alexei Patrov『自由意志の哲学』訳：鈴木真紀（東京:城南大学出版会、2023）。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
 
-`Bibliography entry` Morgan, Casey, and Alexei Patrov. *The Philosophy of Free Will*. Chicago, IL: Global Academic Press, 2022. 〔『自由意志の哲学』訳：鈴木真紀、東京：城南大学出版会、2023。〕
+`Bibliography entry` Morgan, Casey、Alexei Patrov『自由意志の哲学』翻訳：鈴木真紀、東京：城南大学出版会、2023。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
 
 注：これは架空の文献です。
+
+## 既知の問題
+
+- [　] [citeproc-js](https://github.com/Juris-M/citeproc-js)ベースのツールで使用する際、日本語に翻訳された文献におけるラテン系の著者名等が`given name` `family name`ではなく日本語と同様の`family name` `given name`になってしまう。

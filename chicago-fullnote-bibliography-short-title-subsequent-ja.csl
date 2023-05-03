@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-04-27T18:06:52+09:00</updated>
+    <updated>2023-05-03T13:32:27+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -270,7 +270,7 @@
   <macro name="contributors-note-ja">
     <group delimiter=" ">
       <names variable="author">
-        <name sort-separator="、" delimiter="、"/>
+        <name sort-separator=", " delimiter="、"/>
         <label form="short" prefix="、"/>
         <substitute>
           <names variable="editor-ja"/>
@@ -289,7 +289,7 @@
   <macro name="editor-ja">
     <names variable="editor">
       <label form="short" suffix="："/>
-      <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
+      <name name-as-sort-order="first" sort-separator=", " delimiter="、" delimiter-precedes-last="always"/>
     </names>
   </macro>
   <macro name="translator">
@@ -301,7 +301,7 @@
   <macro name="translator-ja">
     <names variable="translator">
       <label form="verb-short" suffix="："/>
-      <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
+      <name name-as-sort-order="first" sort-separator=", " delimiter="、" delimiter-precedes-last="always"/>
     </names>
   </macro>
   <macro name="recipient">
@@ -344,7 +344,7 @@
   <macro name="contributors-ja">
     <group delimiter="。">
       <names variable="author">
-        <name name-as-sort-order="first" sort-separator="、" delimiter="、" delimiter-precedes-last="always"/>
+        <name name-as-sort-order="first" sort-separator=", " delimiter="、" delimiter-precedes-last="always"/>
         <substitute>
           <text macro="editor-ja"/>
           <text macro="translator-ja"/>
@@ -525,14 +525,7 @@
         </choose>
       </if>
       <else-if type="book graphic motion_picture song" match="any">
-        <choose>
-          <if variable="alt-title">
-            <text variable="alt-title" text-case="title" quotes="false" prefix="『" suffix="』"/>
-          </if>
-          <else>
-            <text variable="title" text-case="title" quotes="false" prefix="『" suffix="』"/>
-          </else>
-        </choose>
+        <text variable="title" text-case="title" quotes="false" prefix="『" suffix="』"/>
         <group prefix="（" suffix="）" delimiter=" ">
           <text term="version"/>
           <text variable="version"/>
@@ -1867,11 +1860,20 @@
         <group prefix="（" suffix="）" delimiter="、">
           <text macro="event-note"/>
           <group delimiter="；">
-            <text macro="originally-published"/>
-            <group delimiter="、">
-              <text macro="reprint-note"/>
-              <text macro="publisher-ja"/>
-            </group>
+            <choose>
+              <if variable="translator original-title" match="all">
+                <group delimiter="、">
+                  <text macro="publisher-ja"/>
+                </group>
+              </if>
+              <else>
+                <text macro="originally-published"/>
+                <group delimiter="、">
+                  <text macro="reprint-note"/>
+                  <text macro="publisher-ja"/>
+                </group>
+              </else>
+            </choose>
           </group>
           <text macro="issued-ja"/>
         </group>
@@ -2096,11 +2098,20 @@
             </if>
           </choose>
           <group delimiter="。">
-            <text macro="originally-published"/>
-            <group delimiter="、">
-              <text macro="reprint"/>
-              <text macro="publisher-ja"/>
-            </group>
+            <choose>
+              <if variable="translator original-title" match="all">
+                <group delimiter="、">
+                  <text macro="publisher-ja"/>
+                </group>
+              </if>
+              <else>
+                <text macro="originally-published"/>
+                <group delimiter="、？">
+                  <text macro="reprint"/>
+                  <text macro="publisher-ja"/>
+                </group>
+              </else>
+            </choose>
           </group>
           <text macro="issued-ja"/>
         </group>
@@ -2273,7 +2284,7 @@
       <group suffix="。" delimiter="；">
         <choose>
           <if position="subsequent">
-            <group delimiter="、">
+            <group delimiter="">
               <text macro="contributors-short-ja"/>
               <group delimiter=" ">
                 <group delimiter="、">
@@ -2325,6 +2336,26 @@
               <text macro="access-note-ja"/>
             </group>
           </else>
+        </choose>
+      </group>
+      <!-- 初出であり、かつ翻訳者と原題の情報がある場合には日本語での文献情報の後に追記する -->
+      <group delimiter="">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition position="first"/>
+              <condition variable="translator"/>
+              <condition variable="original-title"/>
+            </conditions>
+            <group delimiter="" prefix="〔" suffix=".〕">
+              <text variable="original-title" font-style="italic"/>
+              <group delimiter="" prefix=" (" suffix=")">
+                <text variable="original-publisher-place" suffix=": "/>
+                <text variable="original-publisher" suffix=", "/>
+                <date variable="original-date" form="numeric-year-only"/>
+              </group>
+            </group>
+          </if>
         </choose>
       </group>
     </layout>
@@ -2387,17 +2418,6 @@
           </else>
         </choose>
       </group>
-      <choose>
-        <if>
-          <conditions match="all">
-            <condition position="first"/>
-            <condition variable="alt-translator"/>
-          </conditions>
-          <alternative prefix="〔" suffix="〕">
-            <alternative-text/>
-          </alternative>
-        </if>
-      </choose>
     </layout>
   </citation>
   <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0">
@@ -2421,18 +2441,9 @@
                       <group delimiter="、">
                         <group delimiter="">
                           <group delimiter="">
-                            <choose>
-                              <if variable="alt-translator">
-                                <text macro="title-ja"/>
-                                <text macro="contributors-ja"/>
-                                <text macro="issue-map-graphic"/>
-                              </if>
-                              <else>
-                                <text macro="contributors-ja"/>
-                                <text macro="title-ja"/>
-                                <text macro="issue-map-graphic"/>
-                              </else>
-                            </choose>
+                            <text macro="contributors-ja"/>
+                            <text macro="title-ja"/>
+                            <text macro="issue-map-graphic"/>
                           </group>
                           <text macro="description-ja"/>
                           <text macro="secondary-contributors-ja"/>
@@ -2461,6 +2472,25 @@
             <text macro="access-ja"/>
           </group>
         </group>
+      </group>
+      <group delimiter="">
+        <!-- 翻訳者と原題の情報がある場合には日本語での文献情報の後に追記する -->
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition variable="translator"/>
+              <condition variable="original-title"/>
+            </conditions>
+            <group delimiter="" prefix="〔" suffix=".〕">
+              <text variable="original-title" font-style="italic"/>
+              <group delimiter="" prefix=" (" suffix=")">
+                <text variable="original-publisher-place" suffix=": "/>
+                <text variable="original-publisher" suffix=", "/>
+                <date variable="original-date" form="numeric-year-only"/>
+              </group>
+            </group>
+          </if>
+        </choose>
       </group>
     </layout>
     <!-- 文献目録に関する日本語以外の言語用の設定 -->
@@ -2506,15 +2536,6 @@
             </group>
             <text macro="access"/>
           </group>
-        </group>
-        <group suffix="">
-          <choose>
-            <if variable="alt-translator">
-              <alternative prefix="〔" suffix="〕">
-                <alternative-text/>
-              </alternative>
-            </if>
-          </choose>
         </group>
       </group>
     </layout>
