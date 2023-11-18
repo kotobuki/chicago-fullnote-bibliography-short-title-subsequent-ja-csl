@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-05-03T13:32:27+09:00</updated>
+    <updated>2023-11-18T15:50:00+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -105,16 +105,16 @@
           <if variable="container-author reviewed-author" match="any">
             <group>
               <names variable="container-author reviewed-author">
-                <label form="verb-short" text-case="lowercase" suffix="："/>
                 <name delimiter="、"/>
+                <label form="verb-short" text-case="lowercase" prefix="："/>
               </names>
             </group>
           </if>
         </choose>
       </group>
       <names variable="editor translator" delimiter="、">
-        <label form="verb-short" text-case="lowercase" suffix="："/>
         <name delimiter="、"/>
+        <label form="verb-short" text-case="lowercase" prefix="："/>
       </names>
     </group>
   </macro>
@@ -160,8 +160,8 @@
     <choose>
       <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="none">
         <names variable="editor translator" delimiter="。">
-          <label form="verb" text-case="capitalize-first" suffix="："/>
           <name delimiter="、"/>
+          <label form="verb" text-case="capitalize-first" prefix="："/>
         </names>
       </if>
     </choose>
@@ -224,15 +224,15 @@
                   <group delimiter="。">
                     <text variable="page"/>
                     <names variable="editor translator" delimiter="、">
-                      <label form="verb" suffix=""/>
                       <name delimiter="、"/>
+                      <label form="verb" prefix="："/>
                     </names>
                   </group>
                 </if>
                 <else>
                   <names variable="editor translator" delimiter="、">
-                    <label form="verb" text-case="lowercase" suffix=""/>
                     <name delimiter="、"/>
+                    <label form="verb" text-case="lowercase" prefix="："/>
                   </names>
                 </else>
               </choose>
@@ -288,8 +288,8 @@
   </macro>
   <macro name="editor-ja">
     <names variable="editor">
-      <label form="short" suffix="："/>
       <name name-as-sort-order="first" sort-separator=", " delimiter="、" delimiter-precedes-last="always"/>
+      <label form="short" prefix="："/>
     </names>
   </macro>
   <macro name="translator">
@@ -300,8 +300,8 @@
   </macro>
   <macro name="translator-ja">
     <names variable="translator">
-      <label form="verb-short" suffix="："/>
       <name name-as-sort-order="first" sort-separator=", " delimiter="、" delimiter-precedes-last="always"/>
+      <label form="verb-short" prefix="："/>
     </names>
   </macro>
   <macro name="recipient">
@@ -985,10 +985,12 @@
         <group delimiter="、">
           <group delimiter="">
             <text macro="collection-title-journal"/>
-            <text variable="volume"/>
+            <text variable="volume" prefix="第"/>
             <text term="volume" form="short"/>
-            <text variable="issue"/>
-            <text term="issue" form="short"/>
+            <if variable="issue" match="any">
+              <text variable="issue" prefix="第"/>
+              <text term="issue" form="short"/>
+            </if>
           </group>
         </group>
       </if>
@@ -1198,10 +1200,12 @@
         <group delimiter="、">
           <group delimiter="">
             <text macro="collection-title-journal"/>
-            <text variable="volume"/>
+            <text variable="volume" prefix="第"/>
             <text term="volume" form="short"/>
-            <text variable="issue"/>
-            <text term="issue" form="short"/>
+            <if variable="issue" match="any">
+              <text variable="issue" prefix="第"/>
+              <text term="issue" form="short"/>
+            </if>
           </group>
         </group>
       </if>
@@ -2308,8 +2312,8 @@
                 <group delimiter="、">
                   <group delimiter="">
                     <group delimiter="、">
-                      <group delimiter="">
-                        <group delimiter="">
+                      <group delimiter="、">
+                        <group delimiter="、">
                           <group delimiter="">
                             <text macro="contributors-note-ja"/>
                             <text macro="title-note-ja"/>
@@ -2447,10 +2451,8 @@
                           </group>
                           <text macro="description-ja"/>
                           <text macro="secondary-contributors-ja"/>
-                          <group delimiter="、">
-                            <text macro="container-title-ja"/>
-                            <text macro="container-contributors-ja"/>
-                          </group>
+                          <text macro="container-title-ja"/>
+                          <text macro="container-contributors-ja"/>
                           <text macro="locators-join-with-period-ja"/>
                         </group>
                         <text macro="locators-join-with-comma-ja"/>
