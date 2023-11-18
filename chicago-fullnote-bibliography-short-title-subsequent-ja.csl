@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-11-18T15:50:00+09:00</updated>
+    <updated>2023-11-18T22:04:00+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -2352,7 +2352,14 @@
               <condition variable="original-title"/>
             </conditions>
             <group delimiter="" prefix="〔" suffix=".〕">
-              <text variable="original-title" font-style="italic"/>
+              <choose>
+                <if type="book" match="any">
+                  <text variable="original-title" font-style="italic"/>
+                </if>
+                <else>
+                  <text variable="original-title"/>
+                </else>
+              </choose>
               <group delimiter="" prefix=" (" suffix=")">
                 <text variable="original-publisher-place" suffix=": "/>
                 <text variable="original-publisher" suffix=", "/>
@@ -2426,7 +2433,8 @@
   </citation>
   <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0">
     <sort>
-      <key macro="contributors-sort"/>
+      <key variable="name-kana"/>
+      <key macro="contributors"/>
       <key variable="title"/>
       <key variable="genre"/>
       <key variable="issued"/>
@@ -2484,7 +2492,14 @@
               <condition variable="original-title"/>
             </conditions>
             <group delimiter="" prefix="〔" suffix=".〕">
-              <text variable="original-title" font-style="italic"/>
+              <choose>
+                <if type="book" match="any">
+                  <text variable="original-title" font-style="italic"/>
+                </if>
+                <else>
+                  <text variable="original-title"/>
+                </else>
+              </choose>
               <group delimiter="" prefix=" (" suffix=")">
                 <text variable="original-publisher-place" suffix=": "/>
                 <text variable="original-publisher" suffix=", "/>
