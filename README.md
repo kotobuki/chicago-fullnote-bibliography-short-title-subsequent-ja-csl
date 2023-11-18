@@ -41,9 +41,9 @@
 ]
 ```
 
-`Note` Casey Morgan、Alexei Patrov『自由意志の哲学』訳：鈴木真紀（東京:城南大学出版会、2023）。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
+`Note` Casey Morgan、Alexei Patrov『自由意志の哲学』、鈴木真紀：訳（東京:城南大学出版会、2023）。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
 
-`Bibliography entry` Morgan, Casey、Alexei Patrov『自由意志の哲学』翻訳：鈴木真紀、東京：城南大学出版会、2023。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
+`Bibliography entry` Morgan, Casey、Alexei Patrov『自由意志の哲学』、鈴木真紀：翻訳、東京：城南大学出版会、2023。〔*The Philosophy of Free Will* (Chicago, IL: Global Academic Press, 2022).〕
 
 注：これは架空の文献です。
 
