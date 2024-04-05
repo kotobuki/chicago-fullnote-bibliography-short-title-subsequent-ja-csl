@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2023-11-18T22:04:00+09:00</updated>
+    <updated>2024-04-05T21:00:00+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -2338,35 +2338,36 @@
                 <text macro="point-locators-join-with-colon"/>
               </group>
               <text macro="access-note-ja"/>
-            </group>
-          </else>
-        </choose>
-      </group>
-      <!-- 初出であり、かつ翻訳者と原題の情報がある場合には日本語での文献情報の後に追記する -->
-      <group delimiter="">
-        <choose>
-          <if>
-            <conditions match="all">
-              <condition position="first"/>
-              <condition variable="translator"/>
-              <condition variable="original-title"/>
-            </conditions>
-            <group delimiter="" prefix="〔" suffix=".〕">
-              <choose>
-                <if type="book" match="any">
-                  <text variable="original-title" font-style="italic"/>
-                </if>
-                <else>
-                  <text variable="original-title"/>
-                </else>
-              </choose>
-              <group delimiter="" prefix=" (" suffix=")">
-                <text variable="original-publisher-place" suffix=": "/>
-                <text variable="original-publisher" suffix=", "/>
-                <date variable="original-date" form="numeric-year-only"/>
+              <!-- 初出であり、かつ翻訳者と原題の情報がある場合には日本語での文献情報の後に追記する -->
+              <!-- この位置だと〔〕の前に不要な、が入ってしまうが、当初の位置ではposition="first"が期待緒通りに動作しない -->
+              <group delimiter="">
+                <choose>
+                  <if>
+                    <conditions match="all">
+                      <!-- <condition position="first"/> -->
+                      <condition variable="translator"/>
+                      <condition variable="original-title"/>
+                    </conditions>
+                    <group delimiter="" prefix="〔" suffix=".〕">
+                      <choose>
+                        <if type="book" match="any">
+                          <text variable="original-title" font-style="italic"/>
+                        </if>
+                        <else>
+                          <text variable="original-title"/>
+                        </else>
+                      </choose>
+                      <group delimiter="" prefix=" (" suffix=")">
+                        <text variable="original-publisher-place" suffix=": "/>
+                        <text variable="original-publisher" suffix=", "/>
+                        <date variable="original-date" form="numeric-year-only"/>
+                      </group>
+                    </group>
+                  </if>
+                </choose>
               </group>
             </group>
-          </if>
+          </else>
         </choose>
       </group>
     </layout>
