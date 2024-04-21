@@ -40,7 +40,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography with Japanese</summary>
-    <updated>2024-04-05T21:00:00+09:00</updated>
+    <updated>2024-04-21T09:09:00+09:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -985,8 +985,10 @@
         <group delimiter="、">
           <group delimiter="">
             <text macro="collection-title-journal"/>
-            <text variable="volume" prefix="第"/>
-            <text term="volume" form="short"/>
+            <if variable="volume" match="any">
+              <text variable="volume" prefix="第"/>
+              <text term="volume" form="short"/>
+            </if>
             <if variable="issue" match="any">
               <text variable="issue" prefix="第"/>
               <text term="issue" form="short"/>
@@ -1200,8 +1202,10 @@
         <group delimiter="、">
           <group delimiter="">
             <text macro="collection-title-journal"/>
-            <text variable="volume" prefix="第"/>
-            <text term="volume" form="short"/>
+            <if variable="volume" match="any">
+              <text variable="volume" prefix="第"/>
+              <text term="volume" form="short"/>
+            </if>
             <if variable="issue" match="any">
               <text variable="issue" prefix="第"/>
               <text term="issue" form="short"/>
@@ -1310,6 +1314,22 @@
         </if>
         <else>
           <date variable="original-date" form="numeric" date-parts="year"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="originally-published-ja">
+    <group delimiter="、">
+      <group delimiter="：">
+        <text variable="original-publisher-place"/>
+        <text variable="original-publisher"/>
+      </group>
+      <choose>
+        <if is-uncertain-date="original-date">
+          <date variable="original-date" form="numeric" date-parts="year" prefix="[" suffix="?]"/>
+        </if>
+        <else>
+          <date variable="original-date" form="numeric-year-only"/>
         </else>
       </choose>
     </group>
@@ -1863,7 +1883,7 @@
       <else-if variable="publisher-place event-place publisher" match="any">
         <group prefix="（" suffix="）" delimiter="、">
           <text macro="event-note"/>
-          <group delimiter="；">
+          <group delimiter="、">
             <choose>
               <if variable="translator original-title" match="all">
                 <group delimiter="、">
@@ -1871,9 +1891,9 @@
                 </group>
               </if>
               <else>
-                <text macro="originally-published"/>
+                <text macro="originally-published-ja"/>
                 <group delimiter="、">
-                  <text macro="reprint-note"/>
+                  <!-- <text macro="reprint-note"/> -->
                   <text macro="publisher-ja"/>
                 </group>
               </else>
@@ -2101,7 +2121,7 @@
               <text variable="genre" text-case="capitalize-first"/>
             </if>
           </choose>
-          <group delimiter="。">
+          <group delimiter="、">
             <choose>
               <if variable="translator original-title" match="all">
                 <group delimiter="、">
@@ -2109,9 +2129,9 @@
                 </group>
               </if>
               <else>
-                <text macro="originally-published"/>
-                <group delimiter="、？">
-                  <text macro="reprint"/>
+                <text macro="originally-published-ja"/>
+                <group delimiter="、">
+                  <!-- <text macro="reprint"/> -->
                   <text macro="publisher-ja"/>
                 </group>
               </else>
@@ -2285,7 +2305,7 @@
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
     <!-- 脚注に関する日本語用の設定 -->
     <layout locale="ja">
-      <group suffix="。" delimiter="；">
+      <group suffix="。" delimiter="；※">
         <choose>
           <if position="subsequent">
             <group delimiter="">
@@ -2342,12 +2362,7 @@
               <!-- この位置だと〔〕の前に不要な、が入ってしまうが、当初の位置ではposition="first"が期待緒通りに動作しない -->
               <group delimiter="">
                 <choose>
-                  <if>
-                    <conditions match="all">
-                      <!-- <condition position="first"/> -->
-                      <condition variable="translator"/>
-                      <condition variable="original-title"/>
-                    </conditions>
+                  <if variable="translator original-title" match="all">
                     <group delimiter="" prefix="〔" suffix=".〕">
                       <choose>
                         <if type="book" match="any">
@@ -2364,6 +2379,19 @@
                       </group>
                     </group>
                   </if>
+                  <else-if variable="original-title" match="all">
+                    <!-- 原題の情報があり翻訳書ではない場合には原題のみ追記する -->
+                    <group delimiter="" prefix="〔" suffix="〕">
+                      <choose>
+                        <if type="book" match="any">
+                          <text variable="original-title" prefix="『" suffix="』"/>
+                        </if>
+                        <else>
+                          <text variable="original-title" prefix="「" suffix="」"/>
+                        </else>
+                      </choose>
+                    </group>
+                  </else-if>
                 </choose>
               </group>
             </group>
@@ -2487,11 +2515,7 @@
       <group delimiter="">
         <!-- 翻訳者と原題の情報がある場合には日本語での文献情報の後に追記する -->
         <choose>
-          <if>
-            <conditions match="all">
-              <condition variable="translator"/>
-              <condition variable="original-title"/>
-            </conditions>
+          <if variable="translator original-title" match="all">
             <group delimiter="" prefix="〔" suffix=".〕">
               <choose>
                 <if type="book" match="any">
@@ -2508,6 +2532,19 @@
               </group>
             </group>
           </if>
+          <else-if variable="original-title" match="all">
+            <!-- 原題の情報があり翻訳書ではない場合には原題のみ追記する -->
+            <group delimiter="" prefix="〔" suffix="〕">
+              <choose>
+                <if type="book" match="any">
+                  <text variable="original-title" prefix="『" suffix="』"/>
+                </if>
+                <else>
+                  <text variable="original-title" prefix="「" suffix="」"/>
+                </else>
+              </choose>
+            </group>
+          </else-if>
         </choose>
       </group>
     </layout>
