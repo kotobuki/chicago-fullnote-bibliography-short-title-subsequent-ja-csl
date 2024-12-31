@@ -2305,7 +2305,7 @@
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
     <!-- 脚注に関する日本語用の設定 -->
     <layout locale="ja">
-      <group suffix="。" delimiter="；※">
+      <group suffix="。" delimiter="；">
         <choose>
           <if position="subsequent">
             <group delimiter="">
