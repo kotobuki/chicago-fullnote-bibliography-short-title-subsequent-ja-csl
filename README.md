@@ -11,8 +11,9 @@
 ## 使い方
 
 - LaTeXおよび[citeproc-lua](https://github.com/zepinglee/citeproc-lua)と組み合わせて使う
-- [Jurism](https://juris-m.github.io/)にインポートして使う
-- [Pandoc](https://pandoc.org/)およびそのフィルター[citeproc-js-based-replacer](https://github.com/kotobuki/citeproc-js-based-replacer)と組み合わせて使う
+- [Zotero](https://www.zotero.org/)にインポートして使う[^KnownIssueZotero]
+
+[^KnownIssueZotero]: Zoteroなど[citeproc-js](https://github.com/Juris-M/citeproc-js)ベースのツールで使用する際、文献の言語を`ja`に設定すると、ラテン系の著者名等が`given name` `family name`ではなく日本語と同様の`family name` `given name`になってしまう（短めの論文であれば最後に手作業で一括変換することによって実用的な範囲に収まるかもしれません）。
 
 ## 例
 
@@ -47,9 +48,9 @@
 
 注：これは架空の文献です。
 
-## 既知の問題
+## 文献管理ツールでの設定
 
-- [　] [citeproc-js](https://github.com/Juris-M/citeproc-js)ベースのツールで使用する際、日本語に翻訳された文献におけるラテン系の著者名等が`given name` `family name`ではなく日本語と同様の`family name` `given name`になってしまう。
+- 日本語文献の場合には、`Language`（`言語`）の値を`ja`に設定する（国名を表す`jpn`や`jp`ではないことに注意）。
 
 ## 付録
 
